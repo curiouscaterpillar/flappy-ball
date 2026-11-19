@@ -24,11 +24,7 @@ namespace FlappyA.Implementations
             if(Console.KeyAvailable)
             {
                 var key = Console.ReadKey(true);
-
-                if (key.Key == ConsoleKey.Spacebar)
-                {
-                    return ControlScheme.Flap;
-                }
+                return ControlScheme.Flap;
             }
 
             return null;

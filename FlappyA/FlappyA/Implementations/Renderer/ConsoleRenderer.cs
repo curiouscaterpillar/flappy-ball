@@ -8,14 +8,12 @@ using System.Text;
 
 namespace FlappyA.Implementations.Renderer
 {
-    internal record Point(float x, float y);
-
     internal class ConsoleRenderer : IRenderer
     {
         private readonly IGameConfiguration _config;
         private readonly IFramerateMonitor _ramerateMonitor;
         private readonly Queue<Point> _trailingLocationBuffer;
-        private const byte TailBufferSize = 4;
+        private const byte TailBufferSize = 3;
 
         public ConsoleRenderer(IGameConfiguration config, IFramerateMonitor framerateMonitor)
         {
@@ -104,7 +102,7 @@ namespace FlappyA.Implementations.Renderer
             }
             else if (Round(x) == 0 || Round(x) == Round(_config.BoundaryX - 1))
             {
-                return "|";
+                return "||";
             }
 
             return null;
@@ -163,13 +161,13 @@ namespace FlappyA.Implementations.Renderer
                 while (_trailingLocationBuffer.Count < TailBufferSize)
                 {
                     var tailCandidate = new Point(--x, y);
-                    if(!_trailingLocationBuffer.Contains(tailCandidate))
+                    if (!_trailingLocationBuffer.Contains(tailCandidate))
                     {
                         _trailingLocationBuffer.Enqueue(tailCandidate);
                     }
                 }
 
-                return " ●";
+                return "● ";
             }
 
             return null;

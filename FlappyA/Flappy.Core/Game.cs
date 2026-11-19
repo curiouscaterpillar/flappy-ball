@@ -1,6 +1,5 @@
 ﻿using Flappy.Core.Core;
 using Flappy.Core.Core.Abstract;
-using System.Diagnostics;
 
 namespace Flappy.Core
 {
@@ -80,7 +79,7 @@ namespace Flappy.Core
                 if ((_ticks - _lastFlapAt) >= _config.FlapThrottle)
                     State.Player.VelocityY = (-1f) * _config.FlapVelocity;
             }
-            
+
             State.Player.PositionY = State.Player.PositionY + State.Player.VelocityY * Time.DeltaTime;
             State.Player.VelocityY += _config.GravityVelocity * Time.DeltaTime;
         }
