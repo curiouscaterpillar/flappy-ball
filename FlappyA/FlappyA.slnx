@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Flappy.Core/Flappy.Core.csproj" />
+  <Project Path="FlappyA/FlappyA.csproj" />
+</Solution>
