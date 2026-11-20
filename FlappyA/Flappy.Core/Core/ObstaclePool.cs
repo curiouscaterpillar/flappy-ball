@@ -62,7 +62,7 @@ namespace Flappy.Core.Core
             float gapYMax = (ushort)_rng.Next(3 + _state.CurrentPipeGateGap, _config.BoundaryY - 3);
             float gapYMin = (ushort)(gapYMax - _state.CurrentPipeGateGap);
 
-            this._pipes.Add(new Pipe(gapYMin, gapYMax, _config.BoundaryX));
+            this._pipes.Add(new Pipe(gapYMin, gapYMax, _config.BoundaryX, _config.PipeWidth));
         }
     }
 }

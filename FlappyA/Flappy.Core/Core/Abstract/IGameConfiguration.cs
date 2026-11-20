@@ -5,9 +5,11 @@
         public ushort BoundaryX { get; }
         public ushort BoundaryY { get; }
 
-        public ushort PlayerStartX { get; }
-        public ushort PlayerStartY { get; }
+        public float PlayerWidth { get; }
+        public float PlayerStartX { get; }
+        public float PlayerStartY { get; }
 
+        public float PipeWidth { get; }
         public float BasePipeVelocity { get; }
         public float MaxPipeVelocity { get; }
         public ushort BasePipeSpawnGap { get; }

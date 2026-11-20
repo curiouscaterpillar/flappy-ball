@@ -4,29 +4,19 @@ namespace Flappy.Core.Entities
 {
     public class Pipe
     {
-        private float _positionX = 0;
-
-        public float PositionX
-        {
-            get
-            {
-                return _positionX;
-            }
-            set
-            {
-                _positionX = value;
-            }
-        }
+        public float PositionX { get; set; }
+        public float Width { get; set; }
 
         public float GapYMin { get; }
         public float GapYMax { get; }
         public bool Passed { get; private set; }
 
-        public Pipe(float gapYMin, float gapYMax, float positionX)
+        public Pipe(float gapYMin, float gapYMax, float positionX, float width)
         {
             GapYMin = gapYMin;
             GapYMax = gapYMax;
             PositionX = positionX;
+            Width = width;
         }
 
         public float MoveLeft(float velocity)

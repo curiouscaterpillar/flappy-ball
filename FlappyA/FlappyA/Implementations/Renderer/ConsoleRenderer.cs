@@ -12,8 +12,6 @@ namespace FlappyA.Implementations.Renderer
     {
         private readonly IGameConfiguration _config;
         private readonly IFramerateMonitor _ramerateMonitor;
-        private readonly Queue<Point> _trailingLocationBuffer;
-        private const byte TailBufferSize = 3;
 
         public ConsoleRenderer(IGameConfiguration config, IFramerateMonitor framerateMonitor)
         {
@@ -22,7 +20,6 @@ namespace FlappyA.Implementations.Renderer
 
             Console.CursorVisible = false;
             Console.OutputEncoding = Encoding.UTF8;
-            _trailingLocationBuffer = new Queue<Point>();
         }
 
         public Task RequestFrameAsync(GameState state)
@@ -113,11 +110,26 @@ namespace FlappyA.Implementations.Renderer
             for (int i = 0; i < state.Pipes.Count; i++)
             {
                 Pipe pipe = state.Pipes[i];
-                if(Round(x) == Round(pipe.PositionX))
+                if (Round(x) == Round(pipe.PositionX + pipe.Width))
                 {
-                    if(y <= pipe.GapYMin || y > pipe.GapYMax)
+                    StringBuilder sb = new StringBuilder();
+                    for (int unit = 0; unit < pipe.Width; unit++)
                     {
-                        return "[]";
+                        // leading
+                        if (unit == 0)
+                        {
+                            sb.Append('(');
+                        }
+
+                        if (unit == pipe.Width - 1)
+                        {
+                            sb.Append(')');
+                        }
+                    }
+
+                    if (y <= pipe.GapYMin || y > pipe.GapYMax)
+                    {
+                        return sb.ToString();
                     }
                 }
 
@@ -129,44 +141,8 @@ namespace FlappyA.Implementations.Renderer
 
         private string? GetPlayerChar(float x, float y, ref readonly GameState state)
         {
-            if (_trailingLocationBuffer.Count > 0)
-            {
-                Point nextPoint = _trailingLocationBuffer.Peek();
-                if (nextPoint.x == x && nextPoint.y == y)
-                {
-                    _trailingLocationBuffer.Dequeue();
-                    int tailLength = _trailingLocationBuffer.Count;
-
-                    if(tailLength == 3)
-                    {
-                        return ". ";
-                    }
-
-                    if(tailLength == 2)
-                    {
-                        return "◌ ";
-                    }
-
-                    if(tailLength == 1)
-                    {
-                        return "○ ";
-                    }
-
-                    return ". ";
-                }
-            }
-
             if (Round(x) == Round(state.Player.PositionX) && Round(y) == Round(state.Player.PositionY))
             {
-                while (_trailingLocationBuffer.Count < TailBufferSize)
-                {
-                    var tailCandidate = new Point(--x, y);
-                    if (!_trailingLocationBuffer.Contains(tailCandidate))
-                    {
-                        _trailingLocationBuffer.Enqueue(tailCandidate);
-                    }
-                }
-
                 return "● ";
             }
 

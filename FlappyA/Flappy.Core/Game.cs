@@ -104,15 +104,18 @@ namespace Flappy.Core
             for (int i = 0; i < _state.Pipes.Count; i++)
             {
                 var pipe = _state.Pipes[i];
-                var pipeX = (float)Math.Round(pipe.PositionX);
 
-                if (pipe.Passed)
+                float playerWidthUnits = State.Player.Width;
+                float pipeWidthUnits = pipe.Width;
+                float pipeX = (float)Math.Floor(pipe.PositionX);
+
+                bool noCollision = pipe.Passed 
+                    || ((playerX - playerWidthUnits + 1.5f) - (pipeX + pipeWidthUnits) < 0);
+
+                if (noCollision)
                     continue;
 
-                if (pipeX != playerX)
-                    continue;
-
-                if (playerY > Math.Round(pipe.GapYMin) && playerY < Math.Round(pipe.GapYMax))
+                if (playerY > Math.Round(pipe.GapYMin) && playerY <= Math.Round(pipe.GapYMax))
                 {
                     // Player scores
                     State.Score++;

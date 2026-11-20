@@ -28,7 +28,7 @@ namespace Flappy.Core.Core
         public GameState(IGameConfiguration config)
         {
             _config = config;
-            Player = new Player(0, 0, config.PlayerStartX, _config.PlayerStartY);
+            Player = new Player(0, 0, config.PlayerStartX, _config.PlayerStartY, _config.PlayerWidth);
         }
 
         public void Reset()
@@ -37,7 +37,7 @@ namespace Flappy.Core.Core
             IsStarted = false;
             IsOver = false;
             Flapped = false;
-            Player = new Player(0, 0, _config.PlayerStartX, _config.PlayerStartY);
+            Player = new Player(0, 0, _config.PlayerStartX, _config.PlayerStartY, _config.PlayerWidth);
             Pipes = new List<Pipe>();
 
             FlapInertia = _config.BaseFlapInertia;

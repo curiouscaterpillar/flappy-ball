@@ -6,10 +6,13 @@ namespace FlappyA
     {
         public ushort BoundaryX => 40;
         public ushort BoundaryY => 15;
-        public ushort PlayerStartX => 10;
-        public ushort PlayerStartY => 8;
+
+        public float PlayerWidth => 2f;
+        public float PlayerStartX => 10f;
+        public float PlayerStartY => 8f;
 
         // Pipe Spawn Settings
+        public float PipeWidth => 2f;
         public float BasePipeVelocity => 9f;
         public float MaxPipeVelocity => 20f;
         public ushort BasePipeSpawnGap => 15;
