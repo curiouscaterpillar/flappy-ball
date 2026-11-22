@@ -22,8 +22,8 @@ namespace FlappyA
         public byte ReducePipeGapSizeAfter => 20;
 
         // Flap Settings
-        public float GravityVelocity => 40f;
-        public float FlapVelocity => 15f;
+        public float GravityVelocity => 90f;
+        public float FlapVelocity => 27f;
         public float BaseFlapInertia => 5;
         public ulong FlapThrottle => 3;
     }

@@ -2,8 +2,6 @@
 using Flappy.Core.Core.Abstract;
 using Flappy.Core.Entities;
 using Flappy.Core.Renderer;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace FlappyA.Implementations.Renderer
@@ -86,6 +84,7 @@ namespace FlappyA.Implementations.Renderer
 
             next = GetBoundaryChar(x, y);
             next = next ?? GetPipeSymbol(x, y, in state);
+            next = next ?? GetTailChar(x, y, in state);
             next = next ?? GetPlayerChar(x, y, in state);
 
             return next ?? "  ";
@@ -143,7 +142,27 @@ namespace FlappyA.Implementations.Renderer
         {
             if (Round(x) == Round(state.Player.PositionX) && Round(y) == Round(state.Player.PositionY))
             {
-                return "● ";
+                return "-)";
+            }
+
+            return null;
+        }
+
+        private string? GetTailChar(float x, float y, ref readonly GameState state)
+        {
+            if (state.IsStarted)
+            {
+                var index = 0;
+                foreach (var tailItem in state.PlayerTail)
+                {
+                    var tailX = Round(tailItem.x - (state.PlayerTail.Count - index) + 1);
+                    if (Round(x) == tailX && Round(y) == Round(tailItem.y))
+                    {
+                        return "--";
+                    }
+
+                    index++;
+                }
             }
 
             return null;

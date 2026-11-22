@@ -28,7 +28,6 @@ framerate.Watch();
 // Run
 while (true)
 {
-
     game.Update();
     await renderer.RequestFrameAsync(game.State);
 

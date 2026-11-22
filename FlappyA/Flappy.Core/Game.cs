@@ -80,6 +80,7 @@ namespace Flappy.Core
                     State.Player.VelocityY = (-1f) * _config.FlapVelocity;
             }
 
+            State.RecordPlayerLocation();
             State.Player.PositionY = State.Player.PositionY + State.Player.VelocityY * Time.DeltaTime;
             State.Player.VelocityY += _config.GravityVelocity * Time.DeltaTime;
         }
