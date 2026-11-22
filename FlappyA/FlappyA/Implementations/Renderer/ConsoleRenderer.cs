@@ -53,7 +53,7 @@ namespace FlappyA.Implementations.Renderer
             Console.WriteLine("Framerate: {0}", _ramerateMonitor.GetSnapshot().framerate);
             Console.WriteLine("Score: {0:F2}", state.Score);
             Console.WriteLine("DeltaTime: {0:F2}", Time.DeltaTime);
-            Console.WriteLine("Velocity: {0:F2}", state.Player.PositionY);
+            Console.WriteLine("Velocity: {0:F2}", state.Player.Position.Y);
             Console.WriteLine("-------------------------------------------");
         }
 
@@ -109,7 +109,7 @@ namespace FlappyA.Implementations.Renderer
             for (int i = 0; i < state.Pipes.Count; i++)
             {
                 Pipe pipe = state.Pipes[i];
-                if (Round(x) == Round(pipe.PositionX + pipe.Width))
+                if (Round(x) == Round(pipe.Position.X + pipe.Width))
                 {
                     StringBuilder sb = new StringBuilder();
                     for (int unit = 0; unit < pipe.Width; unit++)
@@ -140,9 +140,9 @@ namespace FlappyA.Implementations.Renderer
 
         private string? GetPlayerChar(float x, float y, ref readonly GameState state)
         {
-            if (Round(x) == Round(state.Player.PositionX) && Round(y) == Round(state.Player.PositionY))
+            if (Round(x) == Round(state.Player.Position.X) && Round(y) == Round(state.Player.Position.Y))
             {
-                return "-)";
+                return "=)";
             }
 
             return null;
@@ -155,8 +155,8 @@ namespace FlappyA.Implementations.Renderer
                 var index = 0;
                 foreach (var tailItem in state.PlayerTail)
                 {
-                    var tailX = Round(tailItem.x - (state.PlayerTail.Count - index) + 1);
-                    if (Round(x) == tailX && Round(y) == Round(tailItem.y))
+                    var tailX = Round(tailItem.X - (state.PlayerTail.Count - index) + 1);
+                    if (Round(x) == tailX && Round(y) == Round(tailItem.Y))
                     {
                         return "--";
                     }

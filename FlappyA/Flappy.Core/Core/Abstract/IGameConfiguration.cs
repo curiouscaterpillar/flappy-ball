@@ -17,7 +17,6 @@
         public byte DifficultyScaleScoreInterval { get; }
 
         public float FlapVelocity { get; }
-        public float BaseFlapInertia { get; }
         public float GravityVelocity { get; }
         public ulong FlapThrottle { get; }
     }

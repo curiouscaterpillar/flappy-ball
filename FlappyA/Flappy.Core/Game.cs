@@ -1,5 +1,6 @@
 ﻿using Flappy.Core.Core;
 using Flappy.Core.Core.Abstract;
+using System.Numerics;
 
 namespace Flappy.Core
 {
@@ -77,18 +78,27 @@ namespace Flappy.Core
             if (State.Flapped)
             {
                 if ((_ticks - _lastFlapAt) >= _config.FlapThrottle)
-                    State.Player.VelocityY = (-1f) * _config.FlapVelocity;
+                    State.Player.Velocity = new Vector2(
+                        State.Player.Velocity.X, 
+                        (-1f) * _config.FlapVelocity
+                    );
             }
 
             State.RecordPlayerLocation();
-            State.Player.PositionY = State.Player.PositionY + State.Player.VelocityY * Time.DeltaTime;
-            State.Player.VelocityY += _config.GravityVelocity * Time.DeltaTime;
+
+            float posY = State.Player.Position.Y + State.Player.Velocity.Y * Time.DeltaTime;
+            State.Player.Position = new Vector2(State.Player.Position.X, posY);
+
+            float velocityY = State.Player.Velocity.Y + _config.GravityVelocity * Time.DeltaTime;
+            State.Player.Velocity = new Vector2(
+                State.Player.Velocity.X,
+                State.Player.Velocity.Y + _config.GravityVelocity * Time.DeltaTime);
         }
 
         private void ProcessBoundaryCollisions()
         {
-            float playerY = State.Player.PositionY;
-            float playerX = State.Player.PositionX;
+            float playerX = State.Player.Position.X;
+            float playerY = State.Player.Position.Y;
 
             // Player left bounds of game space?
             if (playerY <= 0 || playerY >= _config.BoundaryY)
@@ -99,8 +109,8 @@ namespace Flappy.Core
 
         private void ProcessPipeCollisions()
         {
-            float playerY = (float)Math.Round(State.Player.PositionY);
-            float playerX = (float)Math.Round(State.Player.PositionX);
+            float playerX = (float)Math.Round(State.Player.Position.X);
+            float playerY = (float)Math.Round(State.Player.Position.Y);
 
             for (int i = 0; i < _state.Pipes.Count; i++)
             {
@@ -108,7 +118,7 @@ namespace Flappy.Core
 
                 float playerWidthUnits = State.Player.Width;
                 float pipeWidthUnits = pipe.Width;
-                float pipeX = (float)Math.Floor(pipe.PositionX);
+                float pipeX = (float)Math.Floor(pipe.Position.X);
 
                 bool noCollision = pipe.Passed 
                     || ((playerX - playerWidthUnits + 1.5f) - (pipeX + pipeWidthUnits) < 0);

@@ -24,7 +24,6 @@ namespace FlappyA
         // Flap Settings
         public float GravityVelocity => 90f;
         public float FlapVelocity => 27f;
-        public float BaseFlapInertia => 5;
         public ulong FlapThrottle => 3;
     }
 }

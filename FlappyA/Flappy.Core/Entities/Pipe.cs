@@ -1,29 +1,31 @@
 ﻿using Flappy.Core.Core;
+using Flappy.Core.Core.Abstract;
+using System.Numerics;
 
 namespace Flappy.Core.Entities
 {
-    public class Pipe
+    public class Pipe : GameObject
     {
-        public float PositionX { get; set; }
-        public float Width { get; set; }
-
         public float GapYMin { get; }
         public float GapYMax { get; }
         public bool Passed { get; private set; }
 
-        public Pipe(float gapYMin, float gapYMax, float positionX, float width)
+        public Pipe(float gapYMin, float gapYMax, Vector2 position, float width)
         {
             GapYMin = gapYMin;
             GapYMax = gapYMax;
-            PositionX = positionX;
+            Position = position;
             Width = width;
         }
 
-        public float MoveLeft(float velocity)
+        public Vector2 MoveLeft(float velocity)
         {
-            PositionX -= (float)Math.Round(velocity * Time.DeltaTime, 2);
+            Position = new Vector2(
+                Position.X - (float)Math.Round(velocity * Time.DeltaTime, 2),
+                Position.Y
+            );
 
-            return PositionX;
+            return Position;
         }
 
         public void MarkPassed()
